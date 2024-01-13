@@ -1,6 +1,6 @@
 import NextImage from "next/image";
 import NextLink from "next/link";
-import MenuItem from "./MenuItem";
+import MenuItem from "./menuItem";
 import {
   Box,
   List,
@@ -18,6 +18,7 @@ import {
   MdPlaylistAdd,
   MdFavorite,
 } from "react-icons/md";
+import { usePlaylist } from "../lib/hooks";
 
 const navMenu = [
   {
@@ -50,9 +51,10 @@ const musicMenu = [
   },
 ];
 
-const playList = new Array(30).fill(1).map((_, i) => `Playlist ${i + 1}`);
+// const playList = new Array(30).fill(1).map((_, i) => `Playlist ${i + 1}`);
 
 const SideBar = () => {
+  const { playlists, isLoading, isError } = usePlaylist();
   return (
     <Box
       width="100%"
@@ -83,9 +85,17 @@ const SideBar = () => {
         <Divider color="gray.900" />
         <Box height="calc(100vh - 380px)" overflowY="auto" paddingY="20px">
           <List spacing={2}>
-            {playList.map((name) => {
+            {playlists.map(({ name, id }) => {
               return (
-                <MenuItem key={name} name={name} hasIcon={false} route="/" />
+                <MenuItem
+                  key={name}
+                  name={name}
+                  hasIcon={false}
+                  route={{
+                    pathname: "/playlist/[id]",
+                    query: { id: id },
+                  }}
+                />
               );
             })}
           </List>

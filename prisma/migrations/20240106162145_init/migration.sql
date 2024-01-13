@@ -3,7 +3,8 @@ CREATE TABLE "User" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
-    "email" TEXT NOT NULL
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -13,6 +14,8 @@ CREATE TABLE "Song" (
     "updatedAt" DATETIME NOT NULL,
     "name" TEXT NOT NULL,
     "artistId" INTEGER NOT NULL,
+    "duration" INTEGER NOT NULL,
+    "url" TEXT NOT NULL,
     CONSTRAINT "Song_artistId_fkey" FOREIGN KEY ("artistId") REFERENCES "Artist" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -30,8 +33,8 @@ CREATE TABLE "Playlist" (
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
     "name" TEXT NOT NULL,
-    "userId" INTEGER,
-    CONSTRAINT "Playlist_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    "userId" INTEGER NOT NULL,
+    CONSTRAINT "Playlist_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable
